@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class='slide-container'>
-      <img class='slide' :src="require('../assets/' + state.slides[state.currentSlideIndex])">
+      <img class='slide' :src="require('../assets/' + state.slides[state.currentSlideIndex])" @load="onImgLoad">
     </div>
 
     <div class='controls'>
-      <button class='button-previous' @click='previous()'>&lang;</button>
-      <button class='button-next' @click='next()'>&rang;</button>
+      <div><button v-if='!state.loading' class='button-previous' @click='previous()'>&lang;</button></div>
+      <div><span class='loading' v-if='state.loading'>Loading...</span></div>
+      <div><button v-if='!state.loading' class='button-next' @click='next()'>&rang;</button></div>
     </div>
   </div>
 </template>
@@ -28,18 +29,27 @@ export default defineComponent({
         'posing-999199_1920.jpg',
         'raspberries-1426859_1920.jpg'
       ],
-      currentSlideIndex: 0
+      currentSlideIndex: 0,
+      loading: true,
     })
 
     const previous = () => {
+      state.loading = true;
       state.currentSlideIndex = state.currentSlideIndex > 0 ? state.currentSlideIndex - 1 : state.slides.length - 1
     }
     const next = () => {
+      state.loading = true;
       state.currentSlideIndex = state.currentSlideIndex < state.slides.length - 1 ? state.currentSlideIndex + 1 : 0
+    }
+    const onImgLoad = () => {
+      state.loading = false
     }
 
     // Take keyboard input so desktop users can switch slides using the arrow keys
     const handleKeyboard = (e: KeyboardEvent) => {
+      // prevent poor keyboard experience by doing nothing if we're already waiting for an image to load
+      if (state.loading) return;
+
       switch (e.key) {
         case 'ArrowRight': next(); break
         case 'ArrowUp': next(); break
@@ -50,7 +60,7 @@ export default defineComponent({
     }
     document.addEventListener('keyup', handleKeyboard)
 
-    return { state, previous, next }
+    return { state, previous, next, onImgLoad }
   }
 })
 </script>
@@ -101,4 +111,13 @@ export default defineComponent({
 
   .button-previous { margin-left: 1rem }
   .button-next { margin-right: 1rem }
+
+  .loading {
+    background: hsla(0, 0%, 0%, 0.25);
+    border-radius: 0.5rem;
+    color: #ddd;
+    font-size: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 </style>
