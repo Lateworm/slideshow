@@ -5,8 +5,8 @@
     </div>
 
     <div class='controls'>
-      <button class='button-previous' @click='previous()'>&lt;</button>
-      <button class='button-next' @click='next()'>&gt;</button>
+      <button class='button-previous' @click='previous()'>&lang;</button>
+      <button class='button-next' @click='next()'>&rang;</button>
     </div>
   </div>
 </template>
@@ -37,6 +37,18 @@ export default defineComponent({
     const next = () => {
       state.currentSlideIndex = state.currentSlideIndex < state.slides.length - 1 ? state.currentSlideIndex + 1 : 0
     }
+
+    // Take keyboard input so desktop users can switch slides using the arrow keys
+    const handleKeyboard = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'ArrowRight': next(); break
+        case 'ArrowUp': next(); break
+
+        case 'ArrowLeft': previous(); break
+        case 'ArrowDown': previous(); break
+      }
+    }
+    document.addEventListener('keyup', handleKeyboard)
 
     return { state, previous, next }
   }
@@ -72,19 +84,18 @@ export default defineComponent({
   }
 
   button {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 4rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: hsla(0, 0%, 0%, 0.5);
-    border: 1px solid #ddd;
+    background: hsla(0, 0%, 0%, 0.25);
+    border: none;
     border-radius: 0.5rem;
 
-    font-size: 2rem;
-
+    font-size: 3rem;
     color: #ddd;
   }
 
