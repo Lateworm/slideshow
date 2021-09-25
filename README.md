@@ -1,4 +1,4 @@
-# slideshow
+# Slideshow
 
 ## Project setup
 ```
