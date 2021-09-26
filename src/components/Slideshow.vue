@@ -125,10 +125,7 @@ export default defineComponent({
     position: absolute;
     bottom: 0;
     left: 0;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-  }
-  footer span {
+    margin: 1rem;
     background: hsla(0, 0%, 7%, 0.5);
     color: #ddd;
     border-radius: 0.5rem;
