@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class='slideshow'>
     <div class='slide-container'>
       <img class='slide' :src="require('../assets/' + slides[state.currentSlideIndex])" @load="handleSlideLoad">
     </div>
 
     <div class='controls'>
-      <div><button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>&lang;</button></div>
-      <div><button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>&rang;</button></div>
+      <button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>&lang;</button>
+      <button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>&rang;</button>
     </div>
 
     <footer>
-      <span class='loading' v-if='state.loading'>
+      <span v-if='state.loading'>
         Loading...
       </span>
       <span v-if='!state.loading'>
@@ -84,13 +84,28 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  /*
+    wrapper style to handle page layout
+    using a combo of vw, vh and vendor-prefixed properties
+    to keep all vendor-specifc handling isolated to this element
+  */
+  .slideshow {
+    width: 100vw;
+    height: 100vh;
+    max-height: -webkit-fill-available;
+  }
+
+  /*
+    page styles
+    to avoid height problems on apple mobile devices, do not use vh below here
+  */
   .slide-container {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
   }
   .slide {
     max-width:100%;
@@ -101,8 +116,8 @@ export default defineComponent({
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -125,6 +140,7 @@ export default defineComponent({
   button.button-previous { margin-left: 1rem }
   button.button-next { margin-right: 1rem }
 
+  /* Footer */
   footer {
     position: absolute;
     bottom: 0;
@@ -133,15 +149,6 @@ export default defineComponent({
     background: hsla(0, 0%, 7%, 0.5);
     color: #ddd;
     border-radius: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .loading {
-    background: hsla(0, 0%, 7%, 0.5);
-    border-radius: 0.5rem;
-    color: #ddd;
-    font-size: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
