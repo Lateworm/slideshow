@@ -6,12 +6,16 @@
 
     <div class='controls'>
       <div><button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>&lang;</button></div>
-      <div><span class='loading' v-if='state.loading'>Loading...</span></div>
       <div><button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>&rang;</button></div>
     </div>
 
     <footer>
-      <span>{{ slides[state.currentSlideIndex] }} - viewed {{ state.slideViewCounts[state.currentSlideIndex] }} times(s) this session</span>
+      <span class='loading' v-if='state.loading'>
+        Loading...
+      </span>
+      <span v-if='!state.loading'>
+        {{ slides[state.currentSlideIndex] }} - viewed {{ state.slideViewCounts[state.currentSlideIndex] }} times(s) this session
+      </span>
     </footer>
   </div>
 </template>

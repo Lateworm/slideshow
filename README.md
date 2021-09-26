@@ -1,28 +1,24 @@
 # Slideshow
 
-## Project setup
+## Set up
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Serve with hot-reload for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build for production
 ```
+npm run lint
 npm run build
 ```
 
-### Run your unit tests
+### Test
 ```
 npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ### Customize configuration
