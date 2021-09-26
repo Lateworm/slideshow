@@ -17,12 +17,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
   },
 
   setup () {
@@ -32,40 +32,40 @@ export default defineComponent({
       'coins-1523383_1920.jpg',
       'posing-999199_1920.jpg',
       'raspberries-1426859_1920.jpg',
-    ]
+    ];
     const state = reactive({
       currentSlideIndex: 0,
       slideViewCounts: [0, 0, 0, 0],
       loading: true,
-    })
+    });
 
     // navigation
     const goToPreviousSlide = () => {
       state.loading = true;
       state.currentSlideIndex = state.currentSlideIndex > 0 ? state.currentSlideIndex - 1 : slides.length - 1;
-    }
+    };
     const goToNextSlide = () => {
       state.loading = true;
       state.currentSlideIndex = state.currentSlideIndex < slides.length - 1 ? state.currentSlideIndex + 1 : 0;
-    }
+    };
     const handleSlideLoad = () => {
-      state.loading = false
+      state.loading = false;
       state.slideViewCounts[state.currentSlideIndex]++;
-    }
+    };
 
     // keyboard interface
     const handleKeyboard = (e: KeyboardEvent) => {
       if (state.loading) return;
 
       switch (e.key) {
-        case 'ArrowRight': goToNextSlide(); break
-        case 'ArrowUp': goToNextSlide(); break
+        case 'ArrowRight': goToNextSlide(); break;
+        case 'ArrowUp': goToNextSlide(); break;
 
-        case 'ArrowLeft': goToPreviousSlide(); break
-        case 'ArrowDown': goToPreviousSlide(); break
+        case 'ArrowLeft': goToPreviousSlide(); break;
+        case 'ArrowDown': goToPreviousSlide(); break;
       }
-    }
-    document.addEventListener('keyup', handleKeyboard)
+    };
+    document.addEventListener('keyup', handleKeyboard);
 
     return {
       slides,
@@ -73,9 +73,9 @@ export default defineComponent({
       goToPreviousSlide,
       goToNextSlide,
       handleSlideLoad,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

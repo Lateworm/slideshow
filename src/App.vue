@@ -3,13 +3,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Slideshow from './components/Slideshow.vue'
+import { defineComponent } from 'vue';
+import Slideshow from './components/Slideshow.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { Slideshow }
-})
+  components: { Slideshow },
+});
 </script>
 
 <style>
