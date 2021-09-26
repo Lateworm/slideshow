@@ -1,14 +1,18 @@
 <template>
   <div>
     <div class='slide-container'>
-      <img class='slide' :src="require('../assets/' + state.slides[state.currentSlideIndex])" @load="onImgLoad">
+      <img class='slide' :src="require('../assets/' + slides[state.currentSlideIndex])" @load="handleSlideLoad">
     </div>
 
     <div class='controls'>
-      <div><button v-if='!state.loading' class='button-previous' @click='previous()'>&lang;</button></div>
+      <div><button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>&lang;</button></div>
       <div><span class='loading' v-if='state.loading'>Loading...</span></div>
-      <div><button v-if='!state.loading' class='button-next' @click='next()'>&rang;</button></div>
+      <div><button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>&rang;</button></div>
     </div>
+
+    <footer>
+      <span>{{ slides[state.currentSlideIndex] }} - viewed {{ state.slideViewCounts[state.currentSlideIndex] }} times(s) this session</span>
+    </footer>
   </div>
 </template>
 
@@ -22,45 +26,54 @@ export default defineComponent({
   },
 
   setup () {
+    // data and state
+    const slides = [
+      'coffee-777612_640.jpg',
+      'coins-1523383_1920.jpg',
+      'posing-999199_1920.jpg',
+      'raspberries-1426859_1920.jpg',
+    ]
     const state = reactive({
-      slides: [
-        'coffee-777612_640.jpg',
-        'coins-1523383_1920.jpg',
-        'posing-999199_1920.jpg',
-        'raspberries-1426859_1920.jpg'
-      ],
       currentSlideIndex: 0,
+      slideViewCounts: [0, 0, 0, 0],
       loading: true,
     })
 
-    const previous = () => {
+    // navigation
+    const goToPreviousSlide = () => {
       state.loading = true;
-      state.currentSlideIndex = state.currentSlideIndex > 0 ? state.currentSlideIndex - 1 : state.slides.length - 1
+      state.currentSlideIndex = state.currentSlideIndex > 0 ? state.currentSlideIndex - 1 : slides.length - 1;
     }
-    const next = () => {
+    const goToNextSlide = () => {
       state.loading = true;
-      state.currentSlideIndex = state.currentSlideIndex < state.slides.length - 1 ? state.currentSlideIndex + 1 : 0
+      state.currentSlideIndex = state.currentSlideIndex < slides.length - 1 ? state.currentSlideIndex + 1 : 0;
     }
-    const onImgLoad = () => {
+    const handleSlideLoad = () => {
       state.loading = false
+      state.slideViewCounts[state.currentSlideIndex]++;
     }
 
-    // Take keyboard input so desktop users can switch slides using the arrow keys
+    // keyboard interface
     const handleKeyboard = (e: KeyboardEvent) => {
-      // prevent poor keyboard experience by doing nothing if we're already waiting for an image to load
       if (state.loading) return;
 
       switch (e.key) {
-        case 'ArrowRight': next(); break
-        case 'ArrowUp': next(); break
+        case 'ArrowRight': goToNextSlide(); break
+        case 'ArrowUp': goToNextSlide(); break
 
-        case 'ArrowLeft': previous(); break
-        case 'ArrowDown': previous(); break
+        case 'ArrowLeft': goToPreviousSlide(); break
+        case 'ArrowDown': goToPreviousSlide(); break
       }
     }
     document.addEventListener('keyup', handleKeyboard)
 
-    return { state, previous, next, onImgLoad }
+    return {
+      slides,
+      state,
+      goToPreviousSlide,
+      goToNextSlide,
+      handleSlideLoad,
+    }
   }
 })
 </script>
@@ -75,7 +88,6 @@ export default defineComponent({
     width: 100vw;
     height: 100vh;
   }
-
   .slide {
     max-width:100%;
     max-height:100%;
@@ -90,9 +102,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    outline: 1px dotted cyan;
   }
-
   button {
     width: 3rem;
     height: 4rem;
@@ -101,19 +111,33 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
 
-    background: hsla(0, 0%, 0%, 0.25);
+    background: hsla(0, 0%, 7%, 0.5);
     border: none;
     border-radius: 0.5rem;
 
     font-size: 3rem;
     color: #ddd;
   }
+  button.button-previous { margin-left: 1rem }
+  button.button-next { margin-right: 1rem }
 
-  .button-previous { margin-left: 1rem }
-  .button-next { margin-right: 1rem }
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+  footer span {
+    background: hsla(0, 0%, 7%, 0.5);
+    color: #ddd;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 
   .loading {
-    background: hsla(0, 0%, 0%, 0.25);
+    background: hsla(0, 0%, 7%, 0.5);
     border-radius: 0.5rem;
     color: #ddd;
     font-size: 1rem;
