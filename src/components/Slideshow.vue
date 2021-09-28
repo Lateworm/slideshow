@@ -5,8 +5,21 @@
     </div>
 
     <div class='controls'>
-      <button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>&lang;</button>
-      <button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>&rang;</button>
+      <!-- 'previous' button -->
+      <!-- https://fontawesome.com/v5.15/icons/caret-left?style=solid -->
+      <button v-if='!state.loading' class='button-previous' @click='goToPreviousSlide()'>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+          <path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path>
+        </svg>
+      </button>
+
+      <!-- 'next' button -->
+      <!-- https://fontawesome.com/v5.15/icons/caret-right?style=solid -->
+      <button v-if='!state.loading' class='button-next' @click='goToNextSlide()'>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+          <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+        </svg>
+      </button>
     </div>
 
     <footer>
@@ -116,9 +129,10 @@ export default defineComponent({
     align-items: center;
     justify-content: space-between;
   }
+
   button {
     width: 3rem;
-    height: 4rem;
+    height: 3rem;
 
     display: flex;
     align-items: center;
@@ -128,11 +142,14 @@ export default defineComponent({
     border: none;
     border-radius: 0.5rem;
 
-    font-size: 3rem;
     color: #ddd;
   }
   button.button-previous { margin-left: 1rem }
   button.button-next { margin-right: 1rem }
+  button svg {
+    height: 2rem;
+    fill: #ddd;
+  }
 
   /* Footer */
   footer {

@@ -1,5 +1,7 @@
 # Slideshow
 
+A simple slideshow app for desktop and mobile. Built with Vue 3, TypeScript, and Font Awesome.
+
 ## Notes
 
 ### Direction
