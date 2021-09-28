@@ -85,20 +85,14 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   /*
-    wrapper style to handle page layout
-    using a combo of vw, vh and vendor-prefixed properties
-    to keep all vendor-specifc handling isolated to this element
+    Do not use vh / vw units.
+    Overall app height is handled in in App.vue
   */
   .slideshow {
-    width: 100vw;
-    height: 100vh;
-    max-height: -webkit-fill-available;
+    width: 100%;
+    height: 100%;
   }
 
-  /*
-    page styles
-    to avoid height problems on apple mobile devices, do not use vh below here
-  */
   .slide-container {
     display: flex;
     align-items: center;
